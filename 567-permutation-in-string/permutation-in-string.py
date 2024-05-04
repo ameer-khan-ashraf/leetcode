@@ -1,18 +1,29 @@
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        l,r = 0, len(s1)
-        string_len = 0
-        sorted_s1 = sorted(s1)
+        n1 = len(s1)
+        n2 = len(s2)
 
-        while r <= len(s2):
-            slice_s = slice(l,r)
-            sub_s = s2[slice_s]
+        if n1 > n2: return False
 
-            if sorted(sub_s) == sorted_s1:
+        s1_count = [0]*26
+        s2_count = [0]*26
+
+        for i in range(n1):
+            s1_count[ord(s1[i])-ord('a')] +=1
+            s2_count[ord(s2[i])-ord('a')] +=1
+        
+        if s1_count == s2_count:
+            return True
+        
+        for i in range (n1,n2):
+            s2_count[ord(s2[i])-ord('a')] +=1
+            s2_count[ord(s2[i-n1])-ord('a')] -=1
+            if s1_count == s2_count:
                 return True
-            r+=1
-            l+=1
         return False
+            
+
+
 
             
 
